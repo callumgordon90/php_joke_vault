@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.header-body{
+    background-color: rgb(7, 7, 61);
+    max-width: 100%;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.main-title{
+    color: whitesmoke;
+    margin-left: 1%;
+}
+
+.nav-text{
+    color: whitesmoke;
+    margin-left: 1%;
+}
+
+.footer-body{
+    background-color: rgb(7, 7, 61);
+    max-width: 100%;
+    margin-top: auto; /* This pushes the footer to the bottom */
+}
+
+.footer-text{
+    color: whitesmoke; 
+    text-align: center; /* Center the text within the footer */
+}
