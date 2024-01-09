@@ -6,11 +6,11 @@ body {
     flex-direction: column;
 }
 
-.header-body{
-    background-color: rgb(7, 7, 61);
-    max-width: 100%;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+.vault-font{
+    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+
 
 .main-title{
     color: whitesmoke;
@@ -22,6 +22,18 @@ body {
     margin-left: 1%;
 }
 
+.nav-text-l{
+    color: green;
+    text-decoration: none; /* Remove underline from links */
+    margin-left: 1%;
+}
+.nav-text-r{
+    color: green;
+    margin-left: 1%;
+}
+
+
+
 .footer-body{
     background-color: rgb(7, 7, 61);
     max-width: 100%;
@@ -31,4 +43,54 @@ body {
 .footer-text{
     color: whitesmoke; 
     text-align: center; /* Center the text within the footer */
+}
+
+a.no-underline{
+    text-decoration: none;
+    color: inherit; /* This makes the link color the same as the surrounding text color */
+}
+
+.create_joke{
+    max-width: 70%;
+}
+
+.user-list{
+    list-style-type: none;
+    padding: 1;
+    /*background-color: yellow;*/
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+    gap: 1rem; /* Adjust the gap between items as needed */
+    
+}
+
+.user-item{
+    margin-bottom: 2%; /* Adjust the margin as needed */
+    display: flex;
+    align-items: row;
+    /*background-color: aqua;*/
+}
+
+
+
+
+
+.user-photo{
+    height: 10vh; /* Maintain aspect ratio */
+    width: 10vh;
+    display: block; /* Remove extra space below inline images */
+}
+
+.joker{
+    align-self: center;
+    font-size: x-large;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-left: 2%;
+}
+
+
+.profile-photo{
+    height: 23vh; /* Maintain aspect ratio */
+    width: 23vh;
+    display: block; /* Remove extra space below inline images */
 }

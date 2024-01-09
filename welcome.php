@@ -1,6 +1,7 @@
 <?php
     include '../joke_base/inc/auth.inc.php';
-    require '../joke_base/inc/header.inc.php';    
+    require '../joke_base/inc/header.inc.php'; 
+    
 ?>
 
 <?php 
@@ -22,6 +23,9 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 <ul>
     <?php foreach ($users as $user) : ?>
         <li><?php echo $user['name']; ?></li>
+        <?php if (!empty($user['photo'])) : ?>
+            <li><img src="../joke_base/photos/<?php echo $user['photo']; ?>" alt="User Photo"></li>
+            <?php endif; ?>
         <?php endforeach; ?>
 </ul>
 
@@ -31,3 +35,12 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
 <?php include '../joke_base/inc/footer.inc.php'; ?>
+
+
+
+//george bush
+//j f k 
+// donald trump
+// taz
+john 
+sumny 
