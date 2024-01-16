@@ -4,7 +4,6 @@
 ?>
 
 
-
 <?php
 
 //this sql query selects everything from the user table
@@ -87,7 +86,7 @@ foreach ($users as $user){
         <br>
 
         <!-- Submit Button -->
-        <button type="submit" name="login">login</button>
+        <button type="submit" class='red-button' name="login">login</button>
     </form>
     <br>
 

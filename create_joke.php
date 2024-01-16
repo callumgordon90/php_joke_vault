@@ -43,7 +43,7 @@ $statement->execute();
         
         <br>
         <!-- Submit Button -->
-        <button type="submit" name="create_joke">Create Joke</button>
+        <button type="submit" class='red-button' name="create_joke">Create Joke</button>
     </form>
     <br>
 

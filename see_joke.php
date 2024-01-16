@@ -33,27 +33,29 @@ function vote($pdo, $jokeId, $action)
 // Button to get a random joke
 echo("<h2> Spin the wheel! Hit the button to see a random joke. </h2>
 <form action='' method='post'>
-    <button type='submit' name='getRandomJoke'> COME ON, MAKE ME LAUGH </button>
+    <button type='submit' class='red-button' name='getRandomJoke'> COME ON, MAKE ME LAUGH </button>
 </form>");
 
 // Print a random joke when a user hits the button:
 if (isset($_POST['getRandomJoke'])) {
     $randomJoke = getRandomJoke($jokeset);
 
-    echo("<h1> {$randomJoke['summary']}</h1><p> by {$randomJoke['name']} AKA {$randomJoke['username']} </p>");
+    echo("<h1 class='joke-text'> {$randomJoke['summary']}</h1><p> by {$randomJoke['name']} AKA {$randomJoke['username']} </p>");
 
     echo(
-        "<h2>Did that make you laugh? Rate the joke: </h2>
-        <form action='' method='post'>
-            <input type='hidden' name='jokeId' value='{$randomJoke['id']}'>
-            <button type='submit' name='vote' value='up'> Hilarious! Great joke!
-            </button>
-        </form>
-
-        <form action='' method='post'>
-            <input type='hidden' name='jokeId' value='{$randomJoke['id']}'>
-            <button type='submit' name='vote' value='down'> That joke wasn't funny. Just awful </button>
-        </form>"
+        "<h2>Did that make you laugh? Rate the joke: </h2>  
+            <div class='vote-buttons'>
+                <form action='' method='post'>
+                    <input type='hidden' name='jokeId' value='{$randomJoke['id']}'>
+                    <button type='submit' class='red-button' name='vote' value='up'> Hilarious! Great joke!
+                    </button>
+                </form>
+                
+                <form action='' method='post'>
+                    <input type='hidden' name='jokeId' value='{$randomJoke['id']}'>
+                    <button type='submit' class='red-button' name='vote' value='down'> That joke wasn't funny. Just awful </button>
+                </form>
+            </div>"
     );
 }
 

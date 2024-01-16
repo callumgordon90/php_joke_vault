@@ -95,11 +95,11 @@
 
         <!-- Photo  -->
         <label for="photo">Photo:</label>
-        <input type="file" id="photo" name="photo" accept="image/*">
+        <input type="file"  id="photo" name="photo" accept="image/*">
         
         <br>
         <!-- Submit Button -->
-        <button type="submit" name="register">Register</button>
+        <button type="submit" class='red-button' name="register">Register</button>
     </form>
     <br>
 

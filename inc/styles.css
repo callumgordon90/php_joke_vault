@@ -10,6 +10,11 @@ body {
     font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+/*remove underlining for hyperlinks*/
+a {
+    text-decoration: none;
+}
+
 
 
 .main-title{
@@ -79,6 +84,8 @@ a.no-underline{
     height: 10vh; /* Maintain aspect ratio */
     width: 10vh;
     display: block; /* Remove extra space below inline images */
+    /* border-radius: 50px; */
+    border-radius: 20%;
 }
 
 .joker{
@@ -89,8 +96,71 @@ a.no-underline{
 }
 
 
+
+
+/* container for the edit profile page*/ 
+.profile-container{
+    display: flex;
+    align-items: row;
+    /*background-color: yellow;*/
+}
+
+.profile-names{
+    align-items: column;
+    /*background-color: green;*/
+    padding: 3vh;
+    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 .profile-photo{
-    height: 23vh; /* Maintain aspect ratio */
-    width: 23vh;
+    height: 30vh; /* Maintain aspect ratio */
+    width: 30vh;
     display: block; /* Remove extra space below inline images */
+    padding: 5vh;
+    border-radius: 20%;
+}
+
+.profile-name{
+    align-items: center;
+    margin-top: 1vh;
+    margin-bottom: 55v;
+    font-size: 300%;  
+}
+
+.profile-alias{
+    align-items: center;
+    padding-top: 2vh;
+    font-size: 300%;
+}
+
+.profile-stats{
+    align-items: column;
+    /*background-color: aqua;*/
+    padding: 3vh;
+    padding-top: 5vh;
+    padding-left: 10vh;
+    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/*joke text*/
+.joke-text{
+    font-size: 275%;
+}
+
+
+/*button css*/
+.red-button{
+    border-radius: 5%;
+    border: whitesmoke;
+    padding: 2vh;
+    margin: 1vh;
+    background-color: rgb(107, 10, 99);
+    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: whitesmoke;
+}
+
+/*button alignment when voting for a joke*/
+.vote-buttons{
+    display: flex;
+    align-items: row;
 }
