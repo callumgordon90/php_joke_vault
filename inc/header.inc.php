@@ -22,11 +22,11 @@
             .header-body {
                 max-width: 100%;
                 font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                background-color:<?php echo $headerClass === 'logged-in' ? 'rgb(172, 13, 13)' : 'rgb(7, 7, 61)'; ?>;
+                background-color:<?php echo $headerClass === 'logged-in' ? 'rgb(7, 7, 61)' : 'rgb(7, 7, 61)'; ?>;
                 }
 
             .footer-body{
-            background-color:<?php echo $footerClass === 'logged-in' ? 'rgb(172, 13, 13)' : 'rgb(7, 7, 61)'; ?>;
+            background-color:<?php echo $footerClass === 'logged-in' ? 'rgb(7, 7, 61)' : 'rgb(7, 7, 61)'; ?>;
             max-width: 100%;
             margin-top: auto; /* This pushes the footer to the bottom */
             }

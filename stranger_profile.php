@@ -43,7 +43,38 @@ if (isset($_GET['user_id'])) {
         }
     }
 
+    //////////////////////////////////////////////////////////////////////////////////
+    //CHECK IF THE 'UNFOLLOW BUTTON IS CLICKED:
+    if (isset($_POST['downvote'])) {
+        // Ensure the logged-in user is not following themselves
+        if ($_SESSION['user_id'] !== $_GET['user_id']) {
+            // Prepare the SQL statements to update 'following' and 'followers'
+            $sqlFollowing = "UPDATE user SET following = following - 1 WHERE id = :follower_id";
+            $sqlFollowers = "UPDATE user SET followers = followers - 1 WHERE id = :following_id";
 
+            try {
+                // Begin a transaction
+                $pdo->beginTransaction();
+
+                // Execute the SQL statements
+                $pdo->prepare($sqlFollowing)->execute([':follower_id' => $_SESSION['user_id']]);
+                $pdo->prepare($sqlFollowers)->execute([':following_id' => $_GET['user_id']]);
+
+                // Commit the transaction
+                $pdo->commit();
+
+                // Redirect to the same page to avoid form resubmission on page refresh
+                header("Location: stranger_profile.php?user_id={$_GET['user_id']}");
+                exit();
+            } catch (PDOException $e) {
+                // Rollback the transaction in case of an error
+                $pdo->rollBack();
+                
+                // Handle the error (you can log or display an error message)
+                echo "Error: " . $e->getMessage();
+            }
+        }
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -87,8 +118,14 @@ if (isset($_GET['user_id'])) {
 
     // Display follow/unfollow button
     if ($_SESSION['user_id'] !== $_GET['user_id']) {
+        //FOLLOW BUTTON:
         echo "<form action='' method='post'>";
         echo "<button type='submit' class='red-button-2' name='vote'> Follow </button>";
+        echo "</form>";
+
+        //UNFOLLOW BUTTON:
+        echo "<form action='' method='post'>";
+        echo "<button type='submit' class='red-button-2' name='downvote'> Unfollow </button>";
         echo "</form>";
     }
 

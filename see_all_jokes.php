@@ -4,7 +4,7 @@
     require '../joke_base/inc/header.inc.php'; 
 ?>
 
-<h1> The League Table of Jokes. Voted from best to worst: </h1>
+<h1 class='vault-font'> The League Table of Jokes. Voted from best to worst: </h1>
 
 <?php 
 
@@ -19,7 +19,8 @@
     $jokeset = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     foreach($jokeset as $joke){
-        echo("<li><br><strong>{$joke['summary']}</strong> by {$joke['name']} AKA {$joke['username']}. No. of votes: {$joke['vote_up']}</li><br>" );
+        echo("<div class='vault-font'>
+        <li><br><strong>{$joke['summary']}</strong> by {$joke['name']} AKA {$joke['username']}. No. of votes: {$joke['vote_up']}</li><br></div>" );
     }
 
     //var_dump($statement);
