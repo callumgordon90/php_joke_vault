@@ -5,89 +5,124 @@
 ?>
 
 <?php 
-//First of all, Get ALL the jokes:
-$sql = "SELECT joke.id, joke.summary, joke.vote_up, user.name, user.username
-            FROM joke
-            JOIN user ON joke.user_id = user.id";
-            
 
-    $statement = $pdo->query($sql);
 
-    $jokeset = $statement->fetchAll(PDO::FETCH_ASSOC);
+// Function to toggle follow status
+function toggleFollowStatus($pdo, $followerId, $followingId)
+{
+    // Check if the logged-in user is already following the profile user
+    $isFollowing = isFollowing($pdo, $followerId, $followingId);
 
-    //Now define functions:
+    try {
+        if ($isFollowing) {
+            // Unfollow - Subtract 1 from 'following' of the logged-in user and 'followers' of the profile user
+            $sql = "UPDATE user SET following = following - 1 WHERE id = :follower_id;
+                    UPDATE user SET followers = followers - 1 WHERE id = :following_id;";
+        } else {
+            // Follow - Add 1 to 'following' of the logged-in user and 'followers' of the profile user
+            $sql = "UPDATE user SET following = following + 1 WHERE id = :follower_id;
+                    UPDATE user SET followers = followers + 1 WHERE id = :following_id;";
+        }
 
-    //Function to get random joke from the array: 
-    function getRandomJoke($jokeset){
-        $randomIndex = array_rand($jokeset);
-        return $jokeset[$randomIndex];
-    }
-
-    //Function to vote a joke up:
-    function voteUp($pdo, $jokeId){
-        $sql = "UPDATE joke SET vote_up = vote_up + 1 WHERE id = :jokeId";
         $statement = $pdo->prepare($sql);
-        $statement->bindParam(':jokeId', $jokeId);
+        $statement->bindParam(':follower_id', $followerId);
+        $statement->bindParam(':following_id', $followingId);
         $statement->execute();
-    }
 
-    //Function to vote a joke down: 
-    function voteDown($pdo, $jokeId){
-        $sql = "UPDATE joke SET vote_up = vote_up - 1 WHERE id = :jokeId";
-        $statement = $pdo->prepare($sql);
-        $statement->bindParam(':jokeId', $jokeId);
-        $statement->execute();
+        // Return true to indicate success
+        return true;
+    } catch (PDOException $e) {
+        // Return false in case of an error
+        return false;
     }
+}
 
+// Function to check if the logged-in user is already following the profile user
+function isFollowing($pdo, $followerId, $followingId)
+{
+    $sql = "SELECT COUNT(*) FROM user_follow WHERE follower_id = :follower_id AND following_id = :following_id";
+    $statement = $pdo->prepare($sql);
+    $statement->bindParam(':follower_id', $followerId);
+    $statement->bindParam(':following_id', $followingId);
+    $statement->execute();
+
+    return $statement->fetchColumn() > 0;
+}
 
 ?>
 
 
 
 
-<h2> Spin the wheel! Hit the button to see a random joke. </h2>
-
-<!-- button to get a random joke -->
-<form action="" method="post">
-    <button type="submit" name="getRandomJoke"> COME ON, MAKE ME LAUGH </button>
-</form>
 
 
 
 
-<?php  //Print a random joke when a user hits the button: 
-    if(isset($_POST['getRandomJoke'])){
-        $randomJoke = getRandomJoke($jokeset);
+<?php 
 
-        echo("<h1> {$randomJoke['summary']}</h1><p> by {$randomJoke['name']} AKA {$randomJoke['username']} </p>");
+    if(isset($_GET['user_id'])){
 
-        echo(
-            "<h2>Did that make you laugh? Rate the joke: </h2>
-            <form action='' method='post'>
-            <button type='submit' name='voteUp'value='{$randomJoke['id']}'> Hilarious! Great joke!
-            </button>
-            </form>
-            
-            <form action='' method='post'>
-            <button type='submit' name='voteDown' value='{$randomJoke['id']}'> That joke wasn't funny. Just awful </button>
-            </form>"
-        );
+        //var_dump($_GET);
 
-        //NOW TO ADD VOTES TO THE JOKES:
-        if(isset($_POST['voteUp'])){
-            voteUp($pdo, $_POST['voteUp']); 
-            echo("<p>VOTED UP</p>"); 
+        $sql = "SELECT user.id, user.name, user.username, user.password, user.photo, user.following, user.followers, COUNT(joke.id) AS joke_count
+            FROM user
+            LEFT JOIN joke ON user.id = joke.user_id
+            WHERE user.id = :user_id
+            GROUP BY user.id";
+
+        //Prepare the sql statement
+        $statement = $pdo->prepare($sql);
+
+        $statement->bindParam(':user_id', $_GET['user_id']);
+        $statement->execute();
+
+        //Fetch the user 
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+
+        // Check if the "Follow" button is clicked
+        if (isset($_POST['vote']) && $_POST['vote'] === 'up') {
+        // Toggle follow status
+        if ($_SESSION['user_id'] !== $_GET['user_id']) {
+            // Update 'following' column of the logged-in user
+            // Update 'followers' column of the profile user
+            $followStatus = toggleFollowStatus($pdo, $_SESSION['user_id'], $_GET['user_id']);
+        }
         }
 
-        if(isset($_POST['voteDown'])){
-            voteDown($pdo, $_POST['voteDown']);
-            echo("<p>VOTED DOWN</p>");
+        //var_dump($user);
+        //display user profile:
+        echo "<div class='profile-container'>";
+        echo "<div class='profile-names'>";
+        echo "<h1 class='profile-name'>Name: {$user['name']}</h1>";
+        echo "<h1 class='profile-alias'>Alias: {$user['username']} </h1>";
+        echo "</div>";
+
+        echo "<img class='profile-photo' src='../joke_base/photos/{$user['photo']}' alt='User Photo'>";
+
+        echo "<div class='profile-stats'>";
+        echo "<h2>Jokes Created: {$user['joke_count']}</h2><br>";
+        echo "<h2>Following: {$user['following']}</h2>";
+        echo "<h2>Followed by: {$user['followers']}</h2>";
+        echo "</div>";
+
+        // Display follow/unfollow button
+        if ($_SESSION['user_id'] !== $_GET['user_id']) {
+            echo "<form action='' method='post'>";
+            echo "<button type='submit' class='red-button-2' name='vote' value='up'>" . ($followStatus ? 'Unfollow' : 'Follow') . "</button>";
+            echo "</form>";
         }
-    } 
+
+        echo "</div>";
+        }
+
+        
+
+
 
 
 ?>
-
 
 
 <?php include '../joke_base/inc/footer.inc.php'; ?>

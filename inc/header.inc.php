@@ -38,7 +38,7 @@
     <body>
 
     <div class="header-body <?php echo isset($_SESSION['user_id']) ? 'logged-in' : 'logged-out'; ?>">
-        <h1 class="main-title">THE JOKE VAULT</h1>
+        <h1 class="main-title">THE JOKE VAULT (Proof of Concept)</h1>
         <nav>
 
         <!-- CHANGE NAME OF HOMEPAGE DEPENDING ON IF A USER IS LOGGED IN-->

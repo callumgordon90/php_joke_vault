@@ -1,109 +1,100 @@
 <?php
-    session_start();
-    require '../joke_base/inc/auth.inc.php';
-    require '../joke_base/inc/header.inc.php'; 
-?>
+session_start();
+require '../joke_base/inc/auth.inc.php';
+require '../joke_base/inc/header.inc.php';
+
+
+if (isset($_GET['user_id'])) {
+
+    //CHECK THAT I HAVE THE ID's OF THE LOGGED IN USER AND THE STRANGER USER:
+    //var_dump($_GET);
+    //var_dump($_SESSION);
+
+    //////////////////////////////////////////////////////////////////////////////
+    // Check if the "Follow" button is clicked
+    if (isset($_POST['vote'])) {
+        // Ensure the logged-in user is not following themselves
+        if ($_SESSION['user_id'] !== $_GET['user_id']) {
+            // Prepare the SQL statements to update 'following' and 'followers'
+            $sqlFollowing = "UPDATE user SET following = following + 1 WHERE id = :follower_id";
+            $sqlFollowers = "UPDATE user SET followers = followers + 1 WHERE id = :following_id";
+
+            try {
+                // Begin a transaction
+                $pdo->beginTransaction();
+
+                // Execute the SQL statements
+                $pdo->prepare($sqlFollowing)->execute([':follower_id' => $_SESSION['user_id']]);
+                $pdo->prepare($sqlFollowers)->execute([':following_id' => $_GET['user_id']]);
+
+                // Commit the transaction
+                $pdo->commit();
+
+                // Redirect to the same page to avoid form resubmission on page refresh
+                header("Location: stranger_profile.php?user_id={$_GET['user_id']}");
+                exit();
+            } catch (PDOException $e) {
+                // Rollback the transaction in case of an error
+                $pdo->rollBack();
+                
+                // Handle the error (you can log or display an error message)
+                echo "Error: " . $e->getMessage();
+            }
+        }
+    }
 
 
 
-<?php 
 
-    if(isset($_GET['user_id'])){
+    ///////////////////////////////////////////////////////////////////////////////
 
-        //var_dump($_GET);
 
-        $sql = "SELECT user.id, user.name, user.username, user.password, user.photo, user.following, user.followers, COUNT(joke.id) AS joke_count
+    //SELECT THE STRANGER USER:
+    $sql = "SELECT user.id, user.name, user.username, user.password, user.photo, user.following, user.followers, COUNT(joke.id) AS joke_count
             FROM user
             LEFT JOIN joke ON user.id = joke.user_id
-            WHERE user.id = :user_id
-            GROUP BY user.id";
+            WHERE user.id = :user_id";
+           
 
-        //Prepare the sql statement
-        $statement = $pdo->prepare($sql);
+    //Prepare the sql statement
+    $statement = $pdo->prepare($sql);
 
-        $statement->bindParam(':user_id', $_GET['user_id']);
-        $statement->execute();
+    $statement->bindParam(':user_id', $_GET['user_id']);
+    $statement->execute();
 
-        //Fetch the user 
-        $user = $statement->fetch(PDO::FETCH_ASSOC);
+    //Fetch the stranger user 
+    $strangerUser = $statement->fetch(PDO::FETCH_ASSOC);
 
+    
 
-
-        // Check if the "Follow" button is clicked
-        if (isset($_POST['vote']) && $_POST['vote'] === 'up') {
-        // Toggle follow status
-        if ($_SESSION['user_id'] !== $_GET['user_id']) {
-            // Update 'following' column of the logged-in user
-            // Update 'followers' column of the profile user
-            $followStatus = toggleFollowStatus($pdo, $_SESSION['user_id'], $_GET['user_id']);
-        }
-        }
-
-        //var_dump($user);
-        //display user profile:
-        echo "<div class='profile-container'>";
-        echo "<div class='profile-names'>";
-        echo "<h1 class='profile-name'>Name: {$user['name']}</h1>";
-        echo "<h1 class='profile-alias'>Alias: {$user['username']} </h1>";
-        echo "</div>";
-
-        echo "<img class='profile-photo' src='../joke_base/photos/{$user['photo']}' alt='User Photo'>";
-
-        echo "<div class='profile-stats'>";
-        echo "<h2>Jokes Created: {$user['joke_count']}</h2><br>";
-        echo "<h2>Following: {$user['following']}</h2>";
-        echo "<h2>Followed by: {$user['followers']}</h2>";
-        echo "</div>";
-
-        // Display follow/unfollow button
-        if ($_SESSION['user_id'] !== $_GET['user_id']) {
-            echo "<form action='' method='post'>";
-            echo "<button type='submit' class='red-button-2' name='vote' value='up'>" . ($followStatus ? 'Unfollow' : 'Follow') . "</button>";
-            echo "</form>";
-        }
-
-        echo "</div>";
-        }
-
-        // Function to toggle follow status
-        function toggleFollowStatus($pdo, $followerId, $followingId)
-        {
-            // Check if the logged-in user is already following the profile user
-            $isFollowing = isFollowing($pdo, $followerId, $followingId);
-
-            if ($isFollowing) {
-                // Unfollow - Subtract 1 from 'following' of the logged-in user and 'followers' of the profile user
-                $sql = "UPDATE user SET following = following - 1 WHERE id = :follower_id;
-                        UPDATE user SET followers = followers - 1 WHERE id = :following_id;";
-            } else {
-                // Follow - Add 1 to 'following' of the logged-in user and 'followers' of the profile user
-                $sql = "UPDATE user SET following = following + 1 WHERE id = :follower_id;
-                        UPDATE user SET followers = followers + 1 WHERE id = :following_id;";
-            }
-
-            $statement = $pdo->prepare($sql);
-            $statement->bindParam(':follower_id', $followerId);
-            $statement->bindParam(':following_id', $followingId);
-
-            return $statement->execute();
-        }
-
-        // Function to check if the logged-in user is already following the profile user
-        function isFollowing($pdo, $followerId, $followingId)
-        {
-            $sql = "SELECT COUNT(*) FROM user_follow WHERE follower_id = :follower_id AND following_id = :following_id";
-            $statement = $pdo->prepare($sql);
-            $statement->bindParam(':follower_id', $followerId);
-            $statement->bindParam(':following_id', $followingId);
-            $statement->execute();
-
-            return $statement->fetchColumn() > 0;
-        }
+    var_dump($strangerUser);
 
 
+    //display user profile:
+    echo "<div class='profile-container'>";
+    echo "<div class='profile-names'>";
+    echo "<h1 class='profile-name'>Name: {$strangerUser['name']}</h1>";
+    echo "<h1 class='profile-alias'>Alias: {$strangerUser['username']} </h1>";
+    echo "</div>";
 
+    echo "<img class='profile-photo' src='../joke_base/photos/{$strangerUser['photo']}' alt='User Photo'>";
+
+    echo "<div class='profile-stats'>";
+    echo "<h2>Jokes Created: {$strangerUser['joke_count']}</h2><br>";
+    echo "<h2>Following: {$strangerUser['following']}</h2>";
+    echo "<h2>Followed by: {$strangerUser['followers']}</h2>";
+    echo "</div>";
+
+    // Display follow/unfollow button
+    if ($_SESSION['user_id'] !== $_GET['user_id']) {
+        echo "<form action='' method='post'>";
+        echo "<button type='submit' class='red-button-2' name='vote'> Follow </button>";
+        echo "</form>";
+    }
+
+    echo "</div>";
+}
 
 ?>
-
 
 <?php include '../joke_base/inc/footer.inc.php'; ?>
