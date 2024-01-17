@@ -16,19 +16,23 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 //var_dump($sql[users]);
 ?>
 
-<h1>WELCOME TO THE JOKE VAULT!</h1>
+<div class='welcome'>
+    <div class='welcome-text'>
+        <h1>WELCOME TO THE JOKE VAULT!</h1>
 
-<h1>Here are the users </h1>
+        <h1>Here are the users </h1>
 
-<ul>
-    <?php foreach ($users as $user) : ?>
-        <li><?php echo $user['name']; ?></li>
-        <?php if (!empty($user['photo'])) : ?>
-            <li><img src="../joke_base/photos/<?php echo $user['photo']; ?>" alt="User Photo"></li>
-            <?php endif; ?>
-        <?php endforeach; ?>
-</ul>
-
+        <ul>
+            <?php foreach ($users as $user) : ?>
+                <li><?php echo $user['name']; ?></li>
+                <?php if (!empty($user['photo'])) : ?>
+                    <li><img src="../joke_base/photos/<?php echo $user['photo']; ?>" alt="User Photo"></li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+        </ul>
+        
+    </div>
+</div>
 
 
 
@@ -38,9 +42,4 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-//george bush
-//j f k 
-// donald trump
-// taz
-john 
-sumny 
+

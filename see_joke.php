@@ -30,11 +30,26 @@ function vote($pdo, $jokeId, $action)
 }
 
 
+
+
+
 // Button to get a random joke
-echo("<h2> Spin the wheel! Hit the button to see a random joke. </h2>
-<form action='' method='post'>
-    <button type='submit' class='red-button' name='getRandomJoke'> COME ON, MAKE ME LAUGH </button>
-</form>");
+echo("
+
+<div class='welcome'>
+    <div class='welcome-text'>
+
+        <h2> Spin the wheel! Hit the button to see a random joke. </h2>
+        <form action='' method='post'>
+            <button type='submit' class='red-button' name='getRandomJoke'> COME ON, MAKE ME LAUGH </button>
+        </form>
+    </div>");
+        //if (!isset($_POST['getRandomJoke']))echo("<img class='welcome-photo' src='photos\jester.jpg' alt='Site Photo'>");
+echo("</div>
+
+");
+
+
 
 // Print a random joke when a user hits the button:
 if (isset($_POST['getRandomJoke'])) {
@@ -57,8 +72,7 @@ if (isset($_POST['getRandomJoke'])) {
                 </form>
             </div>"
     );
-}
-
+};
 
 
 // NOW TO ADD VOTES TO THE JOKES:
@@ -68,6 +82,8 @@ if (isset($_POST['vote'])) {
     vote($pdo, $jokeId, $action);
     echo("<p>VOTED " . strtoupper($action) . "</p>");
 }
+
+
 
 include '../joke_base/inc/footer.inc.php';
 ?>

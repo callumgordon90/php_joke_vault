@@ -68,43 +68,46 @@
         }
         else {
 
-            echo("not registered");
+            //echo("not registered");
         }
         ?>
 
+<div class='welcome'>
+    <div class='welcome-text'>
 
+        <h1>REGISTER PAGE </h1>
+        <h2>User Registration</h2>
 
-<h1>REGISTER PAGE </h1>
-<h2>User Registration</h2>
+            <form action="" method="post" enctype="multipart/form-data">
+                <!-- Name -->
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <br>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <!-- Name -->
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br>
+                <!-- Username -->
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
 
-        <!-- Username -->
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
+                <!-- Password -->
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
 
-        <!-- Password -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
+                <!-- Photo  -->
+                <label for="photo">Photo:</label>
+                <input type="file"  id="photo" name="photo" accept="image/*">
+                
+                <br>
+                <!-- Submit Button -->
+                <button type="submit" class='red-button' name="register">Register</button>
+            </form>
+            <br>
 
-        <!-- Photo  -->
-        <label for="photo">Photo:</label>
-        <input type="file"  id="photo" name="photo" accept="image/*">
+            <h3> ..Already have an account? <a href="login.php">login</a> </h3>
+    </div>
+        <img class='welcome-photo' src='photos\jester.jpg' alt='Site Photo'>
+</div>
         
-        <br>
-        <!-- Submit Button -->
-        <button type="submit" class='red-button' name="register">Register</button>
-    </form>
-    <br>
-
-    <h3> ..Already have an account? <a href="login.php">login</a> </h3>
-
-
 
 <?php include '../joke_base/inc/footer.inc.php'; ?>

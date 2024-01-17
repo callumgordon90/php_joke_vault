@@ -4,7 +4,7 @@
     require '../joke_base/inc/header.inc.php'; 
 ?>
 
-<h1> One joke not enough? See ALL the jokes here. MEMBERS ONLY!!! </h1>
+<h1> The League Table of Jokes. Voted from best to worst: </h1>
 
 <?php 
 

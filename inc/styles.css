@@ -7,7 +7,7 @@ body {
 }
 
 .vault-font{
-    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 /*remove underlining for hyperlinks*/
@@ -27,17 +27,6 @@ a {
     margin-left: 1%;
 }
 
-.nav-text-l{
-    color: green;
-    text-decoration: none; /* Remove underline from links */
-    margin-left: 1%;
-}
-.nav-text-r{
-    color: green;
-    margin-left: 1%;
-}
-
-
 
 .footer-body{
     background-color: rgb(7, 7, 61);
@@ -55,8 +44,30 @@ a.no-underline{
     color: inherit; /* This makes the link color the same as the surrounding text color */
 }
 
+/*Welcome page*/
+.welcome{
+    display: flex;
+    /*background-color: yellow;*/
+}
+
+
+.welcome-text{
+    flex: 1; /* Take up remaining space */
+    /*background-color: aqua;*/
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.welcome-photo{
+    margin-right: 35vh;
+    margin-top: 2vh;
+    max-height: 69vh;
+}
+
+
+
+
 .create_joke{
-    max-width: 70%;
+    max-width: 50vh;
 }
 
 .user-list{
@@ -109,12 +120,12 @@ a.no-underline{
     align-items: column;
     /*background-color: green;*/
     padding: 3vh;
-    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .profile-photo{
-    height: 30vh; /* Maintain aspect ratio */
-    width: 30vh;
+    height: 26vh; /* Maintain aspect ratio */
+    width: 26vh;
     display: block; /* Remove extra space below inline images */
     padding: 5vh;
     border-radius: 20%;
@@ -136,10 +147,10 @@ a.no-underline{
 .profile-stats{
     align-items: column;
     /*background-color: aqua;*/
-    padding: 3vh;
-    padding-top: 5vh;
+    padding: 2vh;
+    padding-top: 2vh;
     padding-left: 10vh;
-    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 /*joke text*/
@@ -155,7 +166,7 @@ a.no-underline{
     padding: 2vh;
     margin: 1vh;
     background-color: rgb(107, 10, 99);
-    font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: whitesmoke;
 }
 
@@ -164,3 +175,14 @@ a.no-underline{
     display: flex;
     align-items: row;
 }
+
+.red-button-2{
+    padding: 3vh;
+    border-radius: 5%;
+    border: whitesmoke;
+    max-width: 20vh;
+    background-color: rgb(107, 10, 99);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: whitesmoke;
+}
+

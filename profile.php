@@ -114,15 +114,4 @@
 ?>
 
 
-
-
-
-
-
-
-<h3> this is the edit profile page</h3>
-
-
-
-
 <?php include '../joke_base/inc/footer.inc.php'; ?>

@@ -61,34 +61,38 @@ foreach ($users as $user){
             }
     } else {
 
-        echo('FAILED LOGIN or LOGIN NOT SENT YET');
+        //echo('FAILED LOGIN or LOGIN NOT SENT YET');
     }
 ?>
 
+    <div class='welcome'>
+        <div class='welcome-text'>
+
+            <h1>LOGIN PAGE OF THE WEBSITE</h1>
+
+            <h2>User Login</h2>
 
 
-<h1>LOGIN PAGE OF THE WEBSITE</h1>
+            <form action="" method="post" enctype="multipart/form-data">
+                
 
-<h2>User Login</h2>
+                    <!-- Username -->
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <br>
 
+                    <!-- Password -->
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <br>
 
-<form action="" method="post" enctype="multipart/form-data">
-       
-
-        <!-- Username -->
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-
-        <!-- Password -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-
-        <!-- Submit Button -->
-        <button type="submit" class='red-button' name="login">login</button>
-    </form>
-    <br>
+                    <!-- Submit Button -->
+                    <button type="submit" class='red-button' name="login">login</button>
+                </form>
+                <br>
+        </div>
+            <img class='welcome-photo' src='photos\jester.jpg' alt='Site Photo'>
+    </div>
 
     
 <?php include '../joke_base/inc/footer.inc.php'; ?>

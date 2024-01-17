@@ -18,22 +18,28 @@ if(isset($_SESSION['user_id'])){
 } */
 ?>
 
+<div class='welcome'>
+    <div class='welcome-text'>
 
-<h1>WELCOME TO THE JOKE VAULT <?php if(isset($_SESSION['user_id'])) echo($_SESSION['username']) . '!!!'; else echo('!!!');?></h1>
+        <h1>WELCOME TO THE JOKE VAULT <?php if(isset($_SESSION['user_id'])) echo($_SESSION['username']) . '!!!'; else echo('!!!');?></h1>
 
-<h2>THE WEBSITE WHICH HOSTS THE FUNNIEST JOKES</h2>
-<li>Create funny jokes!</li>
-<li>See the funny jokes of others!</li> 
-<li>Vote on your favourites!</li> 
+        <h2>THE WEBSITE WHICH HOSTS THE FUNNIEST JOKES</h2>
+        <h3>Create funny jokes!</h3>
+        <h3>See the funny jokes of others!</h3> 
+        <h3>Vote on your favourites!</h3> 
 
-<?php if(!isset($_SESSION['user_id'])){
+        <?php if(!isset($_SESSION['user_id'])){
 
-    echo('<h3> Become a member today: <a class="no-underline" href="register.php">sign up</a> </h3>
-    <h3> OR.. already have an account? <a class="no-underline" href="login.php">login</a> </h3>');
-} else{
-    echo("<h2>..take a look around the site!</h2>");
-}
-?>
+            echo('<h3> Become a member today: <a class="no-underline" href="register.php">sign up</a> </h3>
+            <h3> OR.. already have an account? <a class="no-underline" href="login.php">login</a> </h3>');
+        } else{
+            echo("<h2>..take a look around the site!</h2>");
+        }
+        ?>
+
+    </div>
+        <img class='welcome-photo' src='photos\jester.jpg' alt='Site Photo'>
+</div>
 
 
 

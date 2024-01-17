@@ -27,7 +27,8 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
             if(!empty($user['photo'])){
                 echo ('<img class="user-photo" src="../joke_base/photos/' . $user['photo'] . '" alt="User Photo">');
             }
-                echo "<div class='joker'>{$user['name']}</div>";
+                
+            echo '<div class="joker"><a href="stranger_profile.php?user_id=' . $user['id'] . '">' . $user['name'] . '</a></div>';
             ?>
         </li>
         <?php endforeach; ?>
