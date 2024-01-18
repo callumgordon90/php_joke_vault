@@ -23,10 +23,16 @@ if(isset($_SESSION['user_id'])){
 
         <h1>WELCOME TO THE JOKE VAULT <?php if(isset($_SESSION['user_id'])) echo($_SESSION['username']) . '!!!'; else echo('!!!');?></h1>
 
-        <h2>THE WEBSITE WHICH HOSTS THE FUNNIEST JOKES</h2>
-        <h3>Create funny jokes!</h3>
-        <h3>See the funny jokes of others!</h3> 
-        <h3>Vote on your favourites!</h3> 
+        <?php if(!isset($_SESSION['user_id'])){
+            
+            echo("<h2>THE WEBSITE WHICH HOSTS THE FUNNIEST JOKES</h2>");
+            echo("<h3>Create funny jokes!</h3>");
+            echo("<h3>See the funny jokes of others!</h3>");
+            echo("<h3>Vote on your favourites!</h3>");
+
+
+        } ?>
+
 
         <?php if(!isset($_SESSION['user_id'])){
 

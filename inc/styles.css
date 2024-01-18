@@ -196,3 +196,45 @@ a.no-underline{
     color: black;
     size: 12vh;
 }
+
+
+.joke-container{
+    display:flex;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /*background-color: aqua;*/
+    margin-left: 20vh;
+    border-radius: 5%;
+    max-width: 100%;
+    max-height: 3%;
+}
+
+.joke-rank{
+    background-color: rgb(7, 7, 61);
+    color: whitesmoke;
+    border-radius: 20%;
+    padding: 1vh;
+    max-width: 15vh;
+}
+
+
+.joke-line{
+    display: flex;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /*background-color: yellow;*/
+    margin: 2vh;
+    margin-left: 5vh;
+    border-radius: 5%;
+    max-width: 100%;
+}
+
+.joke-votes{
+    background-color: rgb(7, 7, 61);
+    align-items: center;
+    color: whitesmoke;
+    border-radius: 20%;
+    padding: 1vh;
+    max-width: 12vh;
+    margin-left: 3vh;
+}
