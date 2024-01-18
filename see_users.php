@@ -20,7 +20,7 @@ $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $usersPerPage;
 
 // SQL query to fetch users with pagination
-$sql = "SELECT * FROM `user` LIMIT :offset, :usersPerPage";
+$sql = "SELECT * FROM `user` ORDER BY user.name LIMIT :offset, :usersPerPage";
 $statement = $pdo->prepare($sql);
 $statement->bindParam(':offset', $offset, PDO::PARAM_INT);
 $statement->bindParam(':usersPerPage', $usersPerPage, PDO::PARAM_INT);
@@ -69,7 +69,7 @@ $totalPages = ceil($totalUsers / $usersPerPage);
 
 <?php 
 // Display pagination links
-echo '<div class="pagination">Page: ';
+echo '<div class="pagination">Continued on the next pages..: ';
 for ($i = 1; $i <= $totalPages; $i++) {
     echo '<a href="see_users.php?page=' . $i . '">' . $i . '</a>';
 }

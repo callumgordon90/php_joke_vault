@@ -181,8 +181,19 @@ a.no-underline{
     align-items: row;
 }
 
+.kudos-buttons{
+    display: flex;
+    flex-direction: column;
+    /*background-color: yellow;*/
+    margin-left: 5vh;
+    align-items: center;
+}
+
 .red-button-2{
-    padding: 3vh;
+    margin-top: 7vh;
+    padding: 2vh;
+    margin-left: 1vh;
+    margin-right: 1vh;
     border-radius: 5%;
     border: whitesmoke;
     max-width: 20vh;

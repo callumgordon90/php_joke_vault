@@ -1,98 +1,133 @@
 <?php
 session_start();
 require '../joke_base/inc/auth.inc.php';
-require '../joke_base/inc/header.inc.php'; 
-?>
+require '../joke_base/inc/header.inc.php';
 
-<?php
-if (isset($_SESSION['user_id'])) {
+
+if (isset($_GET['user_id'])) {
+
+    //CHECK THAT I HAVE THE ID's OF THE LOGGED IN USER AND THE STRANGER USER:
+    //var_dump($_GET);
+    //var_dump($_SESSION);
+
+    //////////////////////////////////////////////////////////////////////////////
+    // Check if the "Follow" button is clicked
+    if (isset($_POST['vote'])) {
+        // Ensure the logged-in user is not following themselves
+        if ($_SESSION['user_id'] !== $_GET['user_id']) {
+            // Prepare the SQL statements to update 'following' and 'followers'
+            $sqlFollowing = "UPDATE user SET following = following + 1 WHERE id = :follower_id";
+            $sqlFollowers = "UPDATE user SET followers = followers + 1 WHERE id = :following_id";
+
+            try {
+                // Begin a transaction
+                $pdo->beginTransaction();
+
+                // Execute the SQL statements
+                $pdo->prepare($sqlFollowing)->execute([':follower_id' => $_SESSION['user_id']]);
+                $pdo->prepare($sqlFollowers)->execute([':following_id' => $_GET['user_id']]);
+
+                // Commit the transaction
+                $pdo->commit();
+
+                // Redirect to the same page to avoid form resubmission on page refresh
+                header("Location: stranger_profile.php?user_id={$_GET['user_id']}");
+                exit();
+            } catch (PDOException $e) {
+                // Rollback the transaction in case of an error
+                $pdo->rollBack();
+                
+                // Handle the error (you can log or display an error message)
+                echo "Error: " . $e->getMessage();
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
+    //CHECK IF THE 'UNFOLLOW BUTTON IS CLICKED:
+    if (isset($_POST['downvote'])) {
+        // Ensure the logged-in user is not following themselves
+        if ($_SESSION['user_id'] !== $_GET['user_id']) {
+            // Prepare the SQL statements to update 'following' and 'followers'
+            $sqlFollowing = "UPDATE user SET following = following - 1 WHERE id = :follower_id";
+            $sqlFollowers = "UPDATE user SET followers = followers - 1 WHERE id = :following_id";
+
+            try {
+                // Begin a transaction
+                $pdo->beginTransaction();
+
+                // Execute the SQL statements
+                $pdo->prepare($sqlFollowing)->execute([':follower_id' => $_SESSION['user_id']]);
+                $pdo->prepare($sqlFollowers)->execute([':following_id' => $_GET['user_id']]);
+
+                // Commit the transaction
+                $pdo->commit();
+
+                // Redirect to the same page to avoid form resubmission on page refresh
+                header("Location: stranger_profile.php?user_id={$_GET['user_id']}");
+                exit();
+            } catch (PDOException $e) {
+                // Rollback the transaction in case of an error
+                $pdo->rollBack();
+                
+                // Handle the error (you can log or display an error message)
+                echo "Error: " . $e->getMessage();
+            }
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+
+
+    //SELECT THE STRANGER USER:
     $sql = "SELECT user.id, user.name, user.username, user.password, user.photo, user.following, user.followers, COUNT(joke.id) AS joke_count
             FROM user
             LEFT JOIN joke ON user.id = joke.user_id
-            WHERE user.id = :user_id
-            GROUP BY user.id";
+            WHERE user.id = :user_id";
+           
 
-    // Prepare the SQL statement
+    //Prepare the sql statement
     $statement = $pdo->prepare($sql);
-    $statement->bindParam(':user_id', $_SESSION['user_id']);
+
+    $statement->bindParam(':user_id', $_GET['user_id']);
     $statement->execute();
 
-    // Fetch the user 
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    //Fetch the stranger user 
+    $strangerUser = $statement->fetch(PDO::FETCH_ASSOC);
 
-    // EDIT THE USER DETAILS UPDATE LOGIC:
-    // Process form submission
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Validate and update user information here
+    
 
-        // For example, update the name and username
-        $newName = !empty($_POST['new_name']) ? $_POST['new_name'] : $user['name'];
-        $newUsername = !empty($_POST['new_username']) ? $_POST['new_username'] : $user['username'];
+    var_dump($strangerUser);
 
-        $updateSql = "UPDATE `user` SET `name` = :new_name, `username` = :new_username
-                      WHERE `id` = :user_id";
 
-        $updateStatement = $pdo->prepare($updateSql);
-        $updateStatement->bindParam(':new_name', $newName);
-        $updateStatement->bindParam(':new_username', $newUsername);
-        $updateStatement->bindParam(':user_id', $_SESSION['user_id']);
-        $updateStatement->execute();
-
-        // I can similarly update other fields and perform validation as needed
-        // Handle file upload for the new photo
-        if (!empty($_FILES['new_photo']['name'])) {
-            // Implement logic to handle file upload and update the database
-            // Move the uploaded file to the appropriate directory
-            $targetDirectory = '../joke_base/photos/';
-            $targetFile = $targetDirectory . basename($_FILES['new_photo']['name']);
-            move_uploaded_file($_FILES['new_photo']['tmp_name'], $targetFile);
-
-            // Update the database with the new photo filename
-            $updatePhotoSql = "UPDATE `user` SET `photo` = :new_photo WHERE `id` = :user_id";
-            $updatePhotoStatement = $pdo->prepare($updatePhotoSql);
-            $updatePhotoStatement->bindParam(':new_photo', $_FILES['new_photo']['name']);
-            $updatePhotoStatement->bindParam(':user_id', $_SESSION['user_id']);
-            $updatePhotoStatement->execute();
-        }
-
-        // Update session variables with new data (for fresh display after hitting the edit button)
-        $_SESSION['name'] = $newName;
-        $_SESSION['username'] = $newUsername;
-        // Add other variables as needed
-        
-        // Set the notification message
-        $_SESSION['notification'] = '<h1>Your profile has been successfully updated! <h1>';
-    }
-
-    // Display notification if available
-    if (isset($_SESSION['notification'])) {
-        echo '<div class="notification">' . $_SESSION['notification'] . '</div>';
-        unset($_SESSION['notification']); // Clear the notification after displaying it
-    }
-
-    // Display user profile
+    //display user profile:
     echo "<div class='profile-container'>";
     echo "<div class='profile-names'>";
-    echo "<h1 class='profile-name'>Name: {$user['name']}</h1>";
-    echo "<h1 class='profile-alias'>Alias: {$user['username']} </h1>";
+    echo "<h1 class='profile-name'>Name: {$strangerUser['name']}</h1>";
+    echo "<h1 class='profile-alias'>Alias: {$strangerUser['username']} </h1>";
     echo "</div>";
 
-    echo "<img class='profile-photo' src='../joke_base/photos/{$user['photo']}' alt='User Photo'>";
+    echo "<img class='profile-photo' src='../joke_base/photos/{$strangerUser['photo']}' alt='User Photo'>";
 
     echo "<div class='profile-stats'>";
-    echo "<h2>Jokes Created: {$user['joke_count']}</h2><br>";
-    echo "<h2>Following: {$user['following']}</h2>";
-    echo "<h2>Followed by: {$user['followers']}</h2>";
+    echo "<h2>Jokes Created: {$strangerUser['joke_count']}</h2><br>";
+    echo "<h2>Following: {$strangerUser['following']}</h2>";
+    echo "<h2>Followed by: {$strangerUser['followers']}</h2>";
     echo "</div>";
 
-    // Edit profile form
-    echo "<h2>Edit Profile:</h2>";
-    echo "<form action='' method='post' enctype='multipart/form-data'>";
-    echo "New Name: <input type='text' name='new_name' value='{$user['name']}'><br>";
-    echo "New Alias: <input type='text' name='new_username' value='{$user['username']}'><br>";
-    echo "New Photo: <input type='file' name='new_photo'><br>";
-    echo "<button type='submit' class='red-button'>Save Changes</button>";
-    echo "</form>";
+    // Display follow/unfollow button
+    if ($_SESSION['user_id'] !== $_GET['user_id']) {
+        //FOLLOW BUTTON:
+        echo "<form action='' method='post'>";
+        echo "<button type='submit' class='red-button-2' name='vote'> Follow </button>";
+        echo "</form>";
+
+        //UNFOLLOW BUTTON:
+        echo "<form action='' method='post'>";
+        echo "<button type='submit' class='red-button-2' name='downvote'> Unfollow </button>";
+        echo "</form>";
+    }
 
     echo "</div>";
 }

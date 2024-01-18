@@ -98,7 +98,7 @@ if (isset($_GET['user_id'])) {
 
     
 
-    var_dump($strangerUser);
+    //var_dump($strangerUser);
 
 
     //display user profile:
@@ -112,21 +112,22 @@ if (isset($_GET['user_id'])) {
 
     echo "<div class='profile-stats'>";
     echo "<h2>Jokes Created: {$strangerUser['joke_count']}</h2><br>";
-    echo "<h2>Following: {$strangerUser['following']}</h2>";
-    echo "<h2>Followed by: {$strangerUser['followers']}</h2>";
+    echo "<h2>Kudos Given: {$strangerUser['following']}</h2>";
+    echo "<h2>Kudos Recieved: {$strangerUser['followers']}</h2>";
     echo "</div>";
 
     // Display follow/unfollow button
     if ($_SESSION['user_id'] !== $_GET['user_id']) {
         //FOLLOW BUTTON:
-        echo "<form action='' method='post'>";
-        echo "<button type='submit' class='red-button-2' name='vote'> Follow </button>";
+        echo "<div class='kudos-buttons'><form action='' method='post'>";
+        echo "<button type='submit' class='red-button-2' name='vote'> Give Kudos </button>";
         echo "</form>";
 
         //UNFOLLOW BUTTON:
         echo "<form action='' method='post'>";
-        echo "<button type='submit' class='red-button-2' name='downvote'> Unfollow </button>";
+        echo "<button type='submit' class='red-button-2' name='downvote'> Remove Kudos </button>";
         echo "</form>";
+        echo "</div>";
     }
 
     echo "</div>";
