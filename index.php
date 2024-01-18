@@ -39,7 +39,13 @@ if(isset($_SESSION['user_id'])){
             echo('<h3> Become a member today: <a class="no-underline" href="register.php">sign up</a> </h3>
             <h3> OR.. already have an account? <a class="no-underline" href="login.php">login</a> </h3>');
         } else{
-            echo("<h2>..take a look around the site!</h2>");
+            echo("<p>..take a look around the site, but please keep it fairly clean</p>");
+            echo("<div class='rules'>");
+                echo"<h3>RULES OF THE JOKE VAULT:</h3>";
+                echo"<h3>Absolutely No Sexist/Racist/Homophobic Jokes</h3>";
+                echo"<h3>Avoid Profane Language And/Or Excessive Vulgarity</h3>";
+            echo("</div>");
+            echo"<p>Use common sense when posting jokes.. keep them soft and bland.. (like that thing your father disappoints your mother with)!!! ;-)</p>";
         }
         ?>
 

@@ -83,7 +83,7 @@ if (isset($_SESSION['user_id'])) {
         // Add other variables as needed
         
         // Set the notification message
-        $_SESSION['notification'] = '<h1>Your profile has been successfully updated! <h1>';
+        $_SESSION['notification'] = '<h1 class="alert-text">Your profile has been successfully updated! <h1>';
     }
 
     // Display notification if available

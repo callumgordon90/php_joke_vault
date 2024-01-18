@@ -43,7 +43,7 @@ $jokeset = $statement->fetchAll(PDO::FETCH_ASSOC);
                 echo "<div class='joke-rank'>Rank {$rank}<br></div>";
 
                 echo "<div class='joke-line'>";
-                echo "<p><strong>{$joke['summary']}</strong> by {$joke['name']} AKA {$joke['username']}.
+                echo "<p class='joke-phrase'>{$joke['summary']} by {$joke['name']} AKA {$joke['username']}.
                 </p>" . 
                 "<div class='joke-votes'>Score: {$joke['vote_up']} </div><br>";
                 echo "</div>";

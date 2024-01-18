@@ -25,7 +25,7 @@ foreach ($users as $user){
     //LOGIC TO PROCESS LOGINS: 
     if(isset($_POST['login'])){
 
-        echo("LOGIN FORM SENT");
+        echo("<div class='alert-text'>INCORRECT LOGIN CREDENTIALS. PLEASE TRY AGAIN.</div>");
         
 
         $e_username = $_POST['username'];
@@ -43,7 +43,7 @@ foreach ($users as $user){
         $user = $l_statement->fetch(PDO::FETCH_ASSOC);
 
         //ERROR DEBUGGING: 
-        var_dump($e_username, $e_password, $user['password']);
+        //var_dump($e_username, $e_password, $user['password']);
 
         // Verify password and perform login logic:
             if($user && password_verify($e_password, $user['password'] )){
@@ -61,7 +61,7 @@ foreach ($users as $user){
             }
     } else {
 
-        //echo('FAILED LOGIN or LOGIN NOT SENT YET');
+        //echo("<div class='alert-text'>'INCORRECT LOGIN CREDENTIALS'</div>");
     }
 ?>
 

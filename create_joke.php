@@ -53,7 +53,7 @@ $statement->execute();
 </div>
 
 
-<?php if(isset($_POST['joke'])){echo("<p> JOKE SUBMITTED</p>");} ?>
+<?php if(isset($_POST['joke'])){echo("<h1 class='alert-text'> JOKE SUBMITTED</ph1>");} ?>
 
 
 <?php include '../joke_base/inc/footer.inc.php'; ?>

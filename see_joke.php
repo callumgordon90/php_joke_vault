@@ -80,7 +80,7 @@ if (isset($_POST['vote'])) {
     $action = $_POST['vote'];
     $jokeId = $_POST['jokeId'];
     vote($pdo, $jokeId, $action);
-    echo("<p>VOTED " . strtoupper($action) . "</p>");
+    echo("<p class='alert-text'>VOTED " . strtoupper($action) . "</p>");
 }
 
 
