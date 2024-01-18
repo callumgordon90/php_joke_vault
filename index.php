@@ -45,7 +45,7 @@ if(isset($_SESSION['user_id'])){
                 echo"<h3>Absolutely No Sexist/Racist/Homophobic Jokes</h3>";
                 echo"<h3>Avoid Profane Language And/Or Excessive Vulgarity</h3>";
             echo("</div>");
-            echo"<p>Use common sense when posting jokes.. keep them soft and bland.. (like that thing your father disappoints your mother with)!!! ;-)</p>";
+            echo"<p>Use common sense when posting jokes.. keep them soft and bland.. (Just like that thing your father disappoints your mother with)!!! ;-)</p>";
         }
         ?>
 
